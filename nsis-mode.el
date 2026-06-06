@@ -6,9 +6,9 @@
 ;; Maintainer: Matthew L. Fidler
 ;; Created: Tue Nov 16 15:48:02 2010 (-0600)
 ;; Version: 0.45
-;; Last-Updated: Wed May 23 10:15:50 2013 (+0100)
+;; Last-Updated: Sun Jun 7 00:58:43 2026 (+0200)
 ;;           By: Jan T. Sott
-;;     Update #: 1479
+;;     Update #: 1480
 ;; URL: http://github.com/mlf176f2/nsis-mode
 ;; Keywords: NSIS
 ;; Compatibility: Emacs 23.2
@@ -35,8 +35,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
+;; 06-Jun-2026    Jan T. Sott
+;;    Last-Updated: Sun Jun 7 00:52:25 2026 (+0200) #1480 (Jan T. Sott)
+;;    Add missing commands
+;;    Add !assert compile directive
+;;    Add un.onSelChange
+;;    Add missing constants/parameters
+;;    Cleanup deprecated commands
+;;    Remove duplicate variable
+;;    Fix casing of NSISDIR variable
 ;; 08-Jul-2013    Jan T. Sott
-;;    Last-Updated: Mon Jul 08 21:05:17 2013 (+0100) #1476 (Jan T. Sott)
+;;    Last-Updated: Mon Jul 08 21:05:17 2013 (+0100) #1479 (Jan T. Sott)
 ;;    Added new NSIS 3.0a0 commands, sorted command list
 ;; 20-Aug-2012    Matthew L. Fidler
 ;;    Last-Updated: Mon Aug 20 13:08:06 2012 (-0500) #1476 (Matthew L. Fidler)
