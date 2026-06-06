@@ -723,7 +723,7 @@
        "$USERSTARTMENU"
        "$USERTEMPLATES"
        ;; Extra undefined in
-       "$nsisDIR"
+       "$NSISDIR"
        ))
     "* nsis syntax variables"
     )
