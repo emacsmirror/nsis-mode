@@ -711,7 +711,6 @@
        "$RESOURCES"
        "$RESOURCES_LOCALIZED"
        "$CDBURN_AREA"
-       "$HWNDPARENT"
        "$COMMON"
        "$COMMONDESKTOP"
        "$COMMONPROGRAMDATA"
