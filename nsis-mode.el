@@ -1846,12 +1846,12 @@ System::Call 'kernel32::GetModuleFileNameA(i 0, t .R0, i 1024) i r1'
 (defun nsis-nsis-website ()
   "Goto nsis website."
   (interactive)
-  (browse-url "http://nsis.sourceforge.net/"))
+  (browse-url "https://nsis.sourceforge.net/"))
 
 (defun nsis-nsis-forum ()
   "Goto nsis forum."
   (interactive)
-  (browse-url "http://forums.winamp.com/forumdisplay.php?s=&forumid=65"))
+  (browse-url "https://forums.winamp.com/forum/developer-center/nsis-discussion"))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nsis compile functions
