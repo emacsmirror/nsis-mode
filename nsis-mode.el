@@ -736,6 +736,7 @@
       "un.onGUIInit"
       "un.onInit"
       "un.onRebootFailed"
+      "un.onSelChange"
       "un.onUninstFailed"
       "un.onUninstSuccess"
       "un.onUserAbort"
