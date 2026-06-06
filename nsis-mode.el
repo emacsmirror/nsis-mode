@@ -439,6 +439,7 @@
       "!addincludedir"
       "!addplugindir"
       "!appendfile"
+      "!assert"
       "!cd"
       "!define"
       "!delfile"
