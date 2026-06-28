@@ -6,9 +6,9 @@
 ;; Maintainer: Matthew L. Fidler
 ;; Created: Tue Nov 16 15:48:02 2010 (-0600)
 ;; Version: 0.45
-;; Last-Updated: Wed May 23 10:15:50 2013 (+0100)
+;; Last-Updated: Sun Jun 7 00:58:43 2026 (+0200)
 ;;           By: Jan T. Sott
-;;     Update #: 1479
+;;     Update #: 1480
 ;; URL: http://github.com/mlf176f2/nsis-mode
 ;; Keywords: NSIS
 ;; Compatibility: Emacs 23.2
@@ -35,8 +35,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
+;; 06-Jun-2026    Jan T. Sott
+;;    Last-Updated: Sun Jun 7 00:52:25 2026 (+0200) #1480 (Jan T. Sott)
+;;    Add missing commands
+;;    Add !assert compile directive
+;;    Add un.onSelChange
+;;    Add missing constants/parameters
+;;    Cleanup deprecated commands
+;;    Remove duplicate variable
+;;    Fix casing of NSISDIR variable
 ;; 08-Jul-2013    Jan T. Sott
-;;    Last-Updated: Mon Jul 08 21:05:17 2013 (+0100) #1476 (Jan T. Sott)
+;;    Last-Updated: Mon Jul 08 21:05:17 2013 (+0100) #1479 (Jan T. Sott)
 ;;    Added new NSIS 3.0a0 commands, sorted command list
 ;; 20-Aug-2012    Matthew L. Fidler
 ;;    Last-Updated: Mon Aug 20 13:08:06 2012 (-0500) #1476 (Matthew L. Fidler)
@@ -225,7 +234,6 @@
       "InstallDir"
       "InstallDirRegKey"
       "LangString"
-      "LangStringUP"
       "LicenseBkColor"
       "LicenseData"
       "LicenseForceSelection"
@@ -234,6 +242,7 @@
       "LoadLanguageFile"
       "ManifestDPIAware"
       "ManifestLongPathAware"
+      "ManifestMaxVersionTested"
       "ManifestSupportedOS"
       "MiscButtonText"
       "Name"
@@ -252,16 +261,13 @@
       "SectionGroup"
       "SectionGroupEnd"
       "SectionIn"
-      "SectionInstType"
       "SetCompress"
-      "SetCompressionLevel"
       "SetCompressor"
       "SetCompressorDictSize"
       "SetDatablockOptimize"
       "SetDateSave"
       "SetFont"
       "SetOverwrite"
-      "SetPluginUnload"
       "ShowInstDetails"
       "ShowUninstDetails"
       "SilentInstall"
@@ -318,9 +324,13 @@
       "FileOpen"
       "FileRead"
       "FileReadByte"
+      "FileReadUTF16LE"
+      "FileReadWord"
       "FileSeek"
       "FileWrite"
       "FileWriteByte"
+      "FileWriteUTF16LE"
+      "FileWriteWord"
       "FindClose"
       "FindFirst"
       "FindNext"
@@ -399,14 +409,17 @@
       "SetFileAttributes"
       "SetOutPath"
       "SetRebootFlag"
+      "SetRegView"
       "SetShellVarContext"
       "SetSilent"
       "ShowWindow"
       "Sleep"
       "StrCmp"
+      "StrCmpS"
       "StrCpy"
       "StrLen"
       "UnRegDLL"
+      "UnsafeStrCpy"
       "WriteINIStr"
       "WriteRegBin"
       "WriteRegDWORD"
@@ -431,6 +444,7 @@
       "!addincludedir"
       "!addplugindir"
       "!appendfile"
+      "!assert"
       "!cd"
       "!define"
       "!delfile"
@@ -496,6 +510,7 @@
       "manual"
       "alwaysoff"
       "RO"
+      "SW_SHOWDEFAULT"
       "SW_SHOWNORMAL"
       "SW_SHOWMAXIMIZED"
       "SW_SHOWMINIMIZED"
@@ -541,7 +556,12 @@
       "MB_ICONEXCLAMATION"
       "MB_ICONINFORMATION"
       "MB_ICONQUESTION"
+      "MB_ICONHAND"
       "MB_ICONSTOP"
+      "MB_USERICON"
+      "MB_APPLMODAL"
+      "MB_SYSTEMMODAL"
+      "MB_TASKMODAL"
       "MB_TOPMOST"
       "MB_SETFOREGROUND"
       "MB_RIGHT"
@@ -558,6 +578,15 @@
       "IDRETRY"
       "IDYES"
       "SW_HIDE"
+      "SF_SELECTED"
+      "SF_SUBSEC"
+      "SF_BOLD"
+      "SF_RO"
+      "SF_EXPAND"
+      "SF_PSELECTED"
+      "SET"
+      "CUR"
+      "END"
       "current"
       "all"
       "none"
@@ -691,7 +720,6 @@
        "$RESOURCES"
        "$RESOURCES_LOCALIZED"
        "$CDBURN_AREA"
-       "$HWNDPARENT"
        "$COMMON"
        "$COMMONDESKTOP"
        "$COMMONPROGRAMDATA"
@@ -704,7 +732,7 @@
        "$USERSTARTMENU"
        "$USERTEMPLATES"
        ;; Extra undefined in
-       "$nsisDIR"
+       "$NSISDIR"
        ))
     "* nsis syntax variables"
     )
@@ -727,6 +755,7 @@
       "un.onGUIInit"
       "un.onInit"
       "un.onRebootFailed"
+      "un.onSelChange"
       "un.onUninstFailed"
       "un.onUninstSuccess"
       "un.onUserAbort"
@@ -898,9 +927,12 @@
       "EnabledBitmap"
       "GetFullDLLPath"
       "GetParent"
+      "LangStringUP"
       "GetWinampInstPath"
       "PackEXEHeader"
       "SectionDivider"
+      "SectionInstType"
+      "SetCompressionLevel"
       "SetPluginUnload"
       "SubSection"
       "SubSectionEnd"
@@ -1823,12 +1855,12 @@ System::Call 'kernel32::GetModuleFileNameA(i 0, t .R0, i 1024) i r1'
 (defun nsis-nsis-website ()
   "Goto nsis website."
   (interactive)
-  (browse-url "http://nsis.sourceforge.net/"))
+  (browse-url "https://nsis.sourceforge.net/"))
 
 (defun nsis-nsis-forum ()
   "Goto nsis forum."
   (interactive)
-  (browse-url "http://forums.winamp.com/forumdisplay.php?s=&forumid=65"))
+  (browse-url "https://forums.winamp.com/forum/developer-center/nsis-discussion"))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nsis compile functions
